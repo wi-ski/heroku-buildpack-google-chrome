@@ -64,7 +64,7 @@ done
 
 topic "Writing profile script"
 mkdir -p $BUILD_DIR/.profile.d
-cat <<EOF >$BUILD_DIR/.profile.d/000_apt.sh
+cat <<EOF >$BUILD_DIR/.profile.d/google_chrome.sh
 export PATH="\$HOME/.apt/usr/bin:\$PATH"
 export LD_LIBRARY_PATH="\$HOME/.apt/usr/lib/x86_64-linux-gnu:\$HOME/.apt/usr/lib/i386-linux-gnu:\$HOME/.apt/usr/lib:\$LD_LIBRARY_PATH"
 export LIBRARY_PATH="\$HOME/.apt/usr/lib/x86_64-linux-gnu:\$HOME/.apt/usr/lib/i386-linux-gnu:\$HOME/.apt/usr/lib:\$LIBRARY_PATH"
@@ -88,7 +88,13 @@ export | grep -E -e ' (PATH|LD_LIBRARY_PATH|LIBRARY_PATH|INCLUDE_PATH|CPATH|CPPP
 topic "Rewrite package-config files"
 find $BUILD_DIR/.apt -type f -ipath '*/pkgconfig/*.pc' | xargs --no-run-if-empty -n 1 sed -i -e 's!^prefix=\(.*\)$!prefix='"$BUILD_DIR"'/.apt\1!g'
 
-topic "Fixing Google Chrome symlinks"
-
 rm $BUILD_DIR/.apt/usr/bin/google-chrome-unstable
-ln -s /app/.apt/opt/google/chrome-unstable/google-chrome-unstable $BUILD_DIR/.apt/usr/bin/google-chrome-unstable
+
+topic "Setting up Google Chrome path"
+mkdir -p $BUILD_DIR/.google-chrome
+cat <<EOF >$BUILD_DIR/.google-chrome/google-chrome-unstable
+#!/usr/bin/env bash
+/app/.apt/opt/google/chrome-unstable/google-chrome-unstable --disable-gpu --no-sandbox --headless --remote-debugging-port=9222 "$@"
+EOF
+chmod +x $BUILD_DIR/.google-chrome/google-chrome-unstable
+ln -s $BUILD_DIR/.google-chrome/google-chrome-unstable $BUILD_DIR/.apt/usr/bin/google-chrome-unstable
