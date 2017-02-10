@@ -90,5 +90,5 @@ find $BUILD_DIR/.apt -type f -ipath '*/pkgconfig/*.pc' | xargs --no-run-if-empty
 
 topic "Fixing Google Chrome symlinks"
 
-rm $BUILD_DIR/.apt/usr/bin/google-chrome
+# rm $BUILD_DIR/.apt/usr/bin/google-chrome
 ln -s /app/.apt/opt/google/chrome/google-chrome $BUILD_DIR/.apt/usr/bin/google-chrome
