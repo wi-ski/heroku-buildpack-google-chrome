@@ -72,6 +72,8 @@ export INCLUDE_PATH="\$HOME/.apt/usr/include:\$HOME/.apt/usr/include/x86_64-linu
 export CPATH="\$INCLUDE_PATH"
 export CPPPATH="\$INCLUDE_PATH"
 export PKG_CONFIG_PATH="\$HOME/.apt/usr/lib/x86_64-linux-gnu/pkgconfig:\$HOME/.apt/usr/lib/i386-linux-gnu/pkgconfig:\$HOME/.apt/usr/lib/pkgconfig:\$PKG_CONFIG_PATH"
+Xvfb :1 -screen 5 1024x768x8 &
+export DISPLAY=:1.5
 EOF
 
 export PATH="$BUILD_DIR/.apt/usr/bin:$PATH"
