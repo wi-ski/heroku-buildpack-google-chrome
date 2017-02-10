@@ -12,7 +12,7 @@ BUILD_DIR=$1
 CACHE_DIR=$2
 LP_DIR=`cd $(dirname $0); cd ..; pwd`
 
-PACKAGES="https://dl.google.com/linux/direct/google-chrome-unstable_current_amd64.deb libxss1"
+PACKAGES="https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb libxss1 xvfb fluxbox x11vnc dbus libasound2 libqt4-dbus libqt4-network libqtcore4 libqtgui4  libpython2.7 libqt4-xml libaudio2 libmng1 fontconfig liblcms1 lib32stdc++6 lib32asound2 ia32-libs libc6-i386 lib32gcc1 nano"
 
 function error() {
   echo " !     $*" >&2
@@ -90,5 +90,5 @@ find $BUILD_DIR/.apt -type f -ipath '*/pkgconfig/*.pc' | xargs --no-run-if-empty
 
 topic "Fixing Google Chrome symlinks"
 
-rm $BUILD_DIR/.apt/usr/bin/google-chrome-unstable
-ln -s /app/.apt/opt/google/chrome-unstable/google-chrome-unstable $BUILD_DIR/.apt/usr/bin/google-chrome-unstable
+rm $BUILD_DIR/.apt/usr/bin/google-chrome
+ln -s /app/.apt/opt/google/chrome/google-chrome $BUILD_DIR/.apt/usr/bin/google-chrome
